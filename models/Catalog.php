@@ -3,7 +3,7 @@
 namespace models;
 
 use PDO;
-use core\classes\Model;
+use core\classes\{Model, File};
 
 
 class Catalog extends Model
@@ -16,6 +16,9 @@ class Catalog extends Model
 			INNER JOIN product_sizes pr_size ON products.size = pr_size.id;");
 		$query_stmt->execute();
 		$result = $query_stmt->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($result as $key => $product ) {
+			$result[$key]['image'] = unserialize($product['image']);
+		}
 
 		return $result;
 	}	
@@ -35,13 +38,18 @@ class Catalog extends Model
 	}
 
 
-	public function addProduct($params)
+	public function addProduct($params, $file = 0)
 	{
 		unset($params['submit']);
-		
+
+		if($file['picture']['size'] !== 0){
+			$files = File::upload($file);
+			$params['image'] = serialize($files);
+		}
+
 		$query_stmt = $this->db->prepare("
 			INSERT INTO products (name, descr, image, size) 
-			VALUES (?, ?, ?, ?)");
+			VALUES (:name, :descr, :image, :size)");
 		$result = $query_stmt->execute($params);
 
 		return $result;
@@ -51,7 +59,7 @@ class Catalog extends Model
 	public function editProduct($id, $params)
 	{
 		unset($params['submit']);
-		array_push($params, 'id' => $id );
+		$params['id'] = $id;
 
 		$query_stmt = $this->db->prepare("
 			UPDATE products

@@ -10,7 +10,7 @@ class User extends Model
 	public function getUsersList()
 	{
 		$query_stmt = $this->db->query('
-			SELECT u.id, ua.firstname, ua.lastname, u.email, u.username, ua.email
+			SELECT u.id, ua.firstname, ua.lastname, u.email, u.username, u.email
 			FROM users u 
 			INNER JOIN user_attributes ua ON u.id = ua.id');
 		$query_stmt->execute();
@@ -23,7 +23,7 @@ class User extends Model
 	public function getUser($userID)
 	{
 		$query_stmt = $this->db->prepare('
-			SELECT u.id, ua.firstname, ua.lastname, u.email, u.username, u.status, u.regdate, ua.email
+			SELECT u.*, ua.*
 			FROM users u 
 			INNER JOIN user_attributes ua ON u.id = ua.id
 			WHERE u.id = :userID');
@@ -37,11 +37,21 @@ class User extends Model
 	public function editUser($id, $params)
 	{
 		unset($params['submit']);
-		array_push($params, 'id' => $id);
+		$params['id'] = $id;
 
 		$query_stmt = $this->db->prepare("
-			UPDATE users
-			SET email = ?, password = ?, username = ?, status = ?");
+			UPDATE users u, user_attributes ua SET
+				u.username = :username, 
+				u.email = :email, 
+				u.status = :status,
+				u.password = :password, 
+				ua.firstname = :firstname,
+				ua.lastname = :lastname,
+				ua.patronymic = :patronymic,
+				ua.phone = :phone,
+				ua.adress = :adress,
+				ua.type = :type			
+			WHERE u.id = :id AND ua.id = :id");
 		$result = $query_stmt->execute($params);
 
 		return $result;

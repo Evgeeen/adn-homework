@@ -10,7 +10,7 @@
 	    }
 	    $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
-	    var_dump($fileName . '<br>');
+	    //var_dump($fileName . '<br>');
 	    require $fileName;
 
 	    

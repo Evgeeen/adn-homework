@@ -10,13 +10,15 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<ul>
-					<li><a href="/admin/users">Пользователи</a></li>
-					<li><a href="/admin/catalog">Товары</a></li>
-					<li><a href="/admin/productAdd">Добавить товар</a></li>
-				</ul>
+				<p>Пользователи</p>
+				<?php foreach ($user_list as $data): ?>
+					<a href="/admin/user/<?= $data['id'] ?>">
+						<p><?= $data['username'] ?></p>
+					</a>
+				<?php endforeach ?>		
 			</div>
 		</div>
 	</div>
+ 
 </body>
 </html>

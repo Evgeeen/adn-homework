@@ -18,8 +18,8 @@ class AdminController extends AdminBaseController
 	{
 		$user = new User();
 		$user_list = $user->getUsersList();
-
-		require_once 'view/admin/index.php';
+		
+		require_once 'view/admin/usersList.php';
 		return true;
 	}
 
@@ -29,7 +29,7 @@ class AdminController extends AdminBaseController
 		$user = new User();
 		$user_data = $user->getUser($id);
 
-		require_once 'view/admin/index.php';
+		require_once 'view/admin/user.php';
 		return true;
 	}
 
@@ -42,7 +42,9 @@ class AdminController extends AdminBaseController
 			$user->editUser($id, $_POST);	
 		}
 		
-		require_once 'view/admin/index.php';
+		$user_data = $user->getUser($id);
+
+		require_once 'view/admin/userEdit.php';
 		return true;
 	}	
 
@@ -59,6 +61,7 @@ class AdminController extends AdminBaseController
 		$catalog = new Catalog();
 		$products_list = $catalog->getProducts();
 
+		require_once 'view/admin/catalog.php';
 		return true;
 	}
 
@@ -72,14 +75,15 @@ class AdminController extends AdminBaseController
 	}
 
 
-	public function actionProductAdd($params)
+	public function actionProductAdd()
 	{
 		$catalog = new Catalog();
-
+		
 		if(isset($_POST['submit'])) {
-			$add_result = $catalog->addProduct($_POST);	
+			$add_result = $catalog->addProduct($_POST, $_FILES);	
 		}
 		
+		require_once 'view/admin/productAdd.php';
 		return true;
 	}
 

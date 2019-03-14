@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-</head>
+<?php
+    include ROOT . '/templates/head.php';
+?>
+<body>
+<?php 
+	include ROOT . '/templates/navigation.php';
+?>
 <body>
 	
 </body>

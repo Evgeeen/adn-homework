@@ -46,23 +46,22 @@ class Router {
                 $actionName = "Action" . ucfirst(array_shift($segments));
 
                 $controllerFile = ROOT . '/controllers/' . $controllerName . '.php';
-
                 if(file_exists($controllerFile)) {
                     include_once($controllerFile);
                 }
+
                 $controllerObject = new $controllerName;
 
                 $result = call_user_func_array(array($controllerObject, $actionName), $segments);
-                
-                if($result == NULL) {
-                    return header('Location: /404.php');                    
-                }
 
                 if($result !== '') {
                     break;
                 }
             }
-
+        }
+        
+        if(!isset($result)) {
+        	return header('Location: /404.php');
         }
     }
 }
