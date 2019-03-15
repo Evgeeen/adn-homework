@@ -9,18 +9,47 @@ class User extends Model
 {
 	public function loginUser($username, $password)
 	{
-
-		var_dump($username);
 		$query_stmt = $this->db->prepare("
-			SELECT username, email, password 
+			SELECT username, email, password, status
 			FROM users 
 			WHERE username = :username;");
-		$query_stmt->execute(array($username, ':username'));
+		$query_stmt->execute(array('username' => $username));
 		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
-		echo "ok";
-		var_dump($result);
+
+		$errors = array();
+
+		if($result['status'] = 0) {
+			$errors[] = 'Аккаунт не активирован, обратитесь к администратору admin@admin.com';
+		}
+		if($result === false) {
+			$errors[] = 'Пользователя не существует. Пройдите <a href="/reg">регистрацию</a>';	
+		}
+
+		if($result) {
+			if($result['password'] == md5($password)) {
+				return true;
+			}
+		}
 		return $result;
 	}
+
+	/**
+	 * [getUserType description]
+	 * @param  [string] $username [description]
+	 * @return [number]           [description]
+	 */
+	public function getUserType($username)
+	{
+		$query_stmt = $this->db->prepare("
+			SELECT type 
+			FROM users 
+			WHERE username = :username;");
+		$query_stmt->execute(array('username' => $username));
+		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
+
+		return $result['type'];
+	}
+
 
 	public function getUsersList()
 	{

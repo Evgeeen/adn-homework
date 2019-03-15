@@ -1,6 +1,6 @@
 <?php  
 
-use core\classes\Controller;
+use core\classes\{Controller, Session};
 use models\{User};
 
 class UserController extends Controller 
@@ -10,14 +10,45 @@ class UserController extends Controller
 		//parent::__construct();
 		$this->model = new User();
 	}
+
+
 	public function actionLogin()
 	{
-		var_dump($_POST['login']);
-		var_dump($_POST['password']);
-		if(isset($_POST['name']) && isset($_POST['password'])) {
-			var_dump($_POST['name']);
-			$this->model->loginUser($_POST['name'], $_POST['password']);
-		} 
+		if(isset($_POST['login']) && isset($_POST['password'])) {
+			$login = $_POST['login'];
+			$password = $_POST['password'];
+
+			$result = $this->model->loginUser($login, $password);
+
+			if(is_array($result)){
+				$errors = $result;
+			}
+
+			if($result == true) {
+				Session::init();
+				Session::set('login', $login);
+
+				$userStatus = $this->model->getUserType($login);
+				
+				/**
+				 * $userStatus:
+				 * 1 - usualy user
+				 * 2 - personal discount user
+				 * 3 - admin
+				 */
+				switch ($userStatus) {
+					case 1:
+						Session::set('type', 'user');
+						break;
+					case 2:
+						Session::set('type', 'opt');
+						break;
+					case 3:
+						Session::set('type', 'admin');
+						break;
+				}
+			} 
+		}
 
 		require_once 'view/user/login.php';
 		return true;
