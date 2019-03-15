@@ -23,8 +23,6 @@ class User extends Model
 		$query_stmt->execute(array('username' => $username));
 		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
 
-		$errors = array();
-
 		if($result['status'] = 0) {
 			$errors[] = 'Аккаунт не активирован, обратитесь к администратору admin@admin.com';
 		}
@@ -60,7 +58,10 @@ class User extends Model
 		return $result['type'];
 	}
 
-
+	/**
+	 * [getUsersList description]
+	 * @return [type] [description]
+	 */
 	public function getUsersList()
 	{
 		$query_stmt = $this->db->query('
@@ -73,7 +74,11 @@ class User extends Model
 		return $result;
 	}
 
-
+	/**
+	 * [getUser description]
+	 * @param  [type] $userID [description]
+	 * @return [type]         [description]
+	 */
 	public function getUser($userID)
 	{
 		$query_stmt = $this->db->prepare('
@@ -87,7 +92,29 @@ class User extends Model
 		return $result;
 	}
 
+	/**
+	 * [addUser description]
+	 * @param [array] $data [description]
+	 */
+	public function addUser($data)
+	{
+		$data['status'] = 0;
+		$data['type'] = 1;
 
+		$query_stmt = $this->db->prepare("
+			INSERT INTO users (username, email, password, status, type)
+			VALUES (:username, :email, :password, :status, :type)");
+		$result = $query_stmt->execute($data);
+
+		return $result;
+	}
+
+	/**
+	 * [editUser description]
+	 * @param  [type] $id     [description]
+	 * @param  [type] $params [description]
+	 * @return [type]         [description]
+	 */
 	public function editUser($id, $params)
 	{
 		unset($params['submit']);

@@ -1,7 +1,7 @@
 <?php  
 
 use core\classes\{Controller, Session};
-use models\{User};
+use models\{User, RegistrationForm};
 
 class UserController extends Controller 
 {
@@ -51,6 +51,27 @@ class UserController extends Controller
 		} 
 
 		require_once 'view/user/login.php';
+		return true;
+	}
+
+
+	public function actionRegistration()
+	{
+		if(isset($_POST) AND $_SERVER['REQUEST_METHOD'] == 'POST') {
+			$user_reg_form = new RegistrationForm($_POST);	
+
+			if($data = $user_reg_form->validate()) {
+				$test = $this->model->addUser($data);	
+				if($test == true) {
+					header('Location: /registration/success');
+				}
+			}
+			else {
+				$errors = $user_reg_form->getErrors();
+			}
+		}
+		
+		require_once 'view/user/registration.php';
 		return true;
 	}
 

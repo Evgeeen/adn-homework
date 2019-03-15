@@ -7,7 +7,8 @@
 						echo '<a href="/logout">Выход</a>';
 					} 
 					else {
-						echo '<a href="/auth">Вход</a>';	
+						echo '<a href="/auth">Вход</a> ';
+						echo '<a href="/registration">Регистрация</a>';	
 					}
 				?>
 			</div>
