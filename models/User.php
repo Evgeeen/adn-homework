@@ -9,18 +9,56 @@ class User extends Model
 {
 	public function loginUser($username, $password)
 	{
+		$errors = array();
+		
+		if(empty($username) OR empty($password)) {
+			$errors[] = 'Для авторизации введите логин и пароль.';
+			return $errors;
+		}
 
-		var_dump($username);
 		$query_stmt = $this->db->prepare("
-			SELECT username, email, password 
+			SELECT username, email, password, status
 			FROM users 
 			WHERE username = :username;");
-		$query_stmt->execute(array($username, ':username'));
+		$query_stmt->execute(array('username' => $username));
 		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
-		echo "ok";
-		var_dump($result);
-		return $result;
+
+		if($result == false) {
+			$errors[] = 'Пользователя не существует. Пройдите <a href="/reg">регистрацию</a>';	
+			return $errors;
+		}
+
+		if($result['status'] = 0) {
+			$errors[] = 'Аккаунт не активирован, обратитесь к администратору admin@admin.com';
+			return $errors;
+		}
+
+		if($result) {
+			if($result['password'] !== md5($password)) {
+				$errors[] = 'Данные введены неверно';
+				return $errors;
+			} 	
+		}
+		return true;
 	}
+
+	/**
+	 * [getUserType description]
+	 * @param  [string] $username [description]
+	 * @return [number]           [description]
+	 */
+	public function getUserType($username)
+	{
+		$query_stmt = $this->db->prepare("
+			SELECT type 
+			FROM users 
+			WHERE username = :username;");
+		$query_stmt->execute(array('username' => $username));
+		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
+
+		return $result['type'];
+	}
+
 
 	public function getUsersList()
 	{

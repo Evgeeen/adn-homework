@@ -10,6 +10,17 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
+				<div class="error-block">
+					<ul>
+						<?php 
+							if(isset($errors)) {
+								foreach ($errors as $error) {
+									echo '<li>' . $error . '</li>';
+								}	
+							} 
+						?>
+					</ul>
+				</div>
 				<form class="form-auth" action="/auth" method="POST">
 					<label for="login">login</label>
 					<input class="form-control" type="text" name="login">
