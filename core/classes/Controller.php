@@ -4,10 +4,23 @@ namespace core\classes;
 
 use core\components;
 
-class Controller {
+class Controller 
+{
+	/**
+	 * [$model description]
+	 * @var [type]
+	 */
+	public $model;
 
+	/**
+	 * [$loggedUser description]
+	 * @var boolean
+	 */
 	public $loggedUser = false;
 
+	/**
+	 * [__construct description]
+	 */
 	public function __construct()
 	{
 		Session::init();

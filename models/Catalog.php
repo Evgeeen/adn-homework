@@ -13,7 +13,7 @@ class Catalog extends Model
 	}
 
 
-	public function getProducts()
+	public function getProducts($page = 1)
 	{
 		$query_stmt = $this->db->prepare("
 			SELECT products.*,  pr_size.width, pr_size.height
@@ -21,10 +21,10 @@ class Catalog extends Model
 			INNER JOIN product_sizes pr_size ON products.size = pr_size.id;");
 		$query_stmt->execute();
 		$result = $query_stmt->fetchAll(PDO::FETCH_ASSOC);
+		
 		foreach ($result as $key => $product ) {
 			$result[$key]['image'] = unserialize($product['image']);
 		}
-
 		return $result;
 	}	
 
