@@ -23,23 +23,21 @@ class User extends Model
 		$query_stmt->execute(array('username' => $username));
 		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
 
-		if($result == false) {
-			$errors[] = 'Пользователя не существует. Пройдите <a href="/reg">регистрацию</a>';	
-			return $errors;
-		}
+		$errors = array();
 
 		if($result['status'] = 0) {
 			$errors[] = 'Аккаунт не активирован, обратитесь к администратору admin@admin.com';
-			return $errors;
+		}
+		if($result === false) {
+			$errors[] = 'Пользователя не существует. Пройдите <a href="/reg">регистрацию</a>';	
 		}
 
 		if($result) {
-			if($result['password'] !== md5($password)) {
-				$errors[] = 'Данные введены неверно';
-				return $errors;
-			} 	
+			if($result['password'] == md5($password)) {
+				return true;
+			}
 		}
-		return true;
+		return $result;
 	}
 
 	/**

@@ -13,9 +13,9 @@ class AdminBaseController {
 	{
 		Session::init();
 
-		if(!Session::get('logged')){
+		if(Session::get('type') !== 'admin'){
 			Session::destroy();
-			header('location: /user/login');
+			header('location: /auth');
 		}
 	}
 }
