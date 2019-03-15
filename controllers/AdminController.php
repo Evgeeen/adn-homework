@@ -78,7 +78,7 @@ class AdminController extends AdminBaseController
 	public function actionProductAdd()
 	{
 		$catalog = new Catalog();
-		
+
 		if(isset($_POST['submit'])) {
 			$add_result = $catalog->addProduct($_POST, $_FILES);	
 		}
@@ -91,12 +91,14 @@ class AdminController extends AdminBaseController
 	public function actionProductEdit($id)
 	{
 		$catalog = new Catalog();
-		$product_data = $catalog->getProducts();
-
+		
 		if(isset($_POST['submit'])) {
-			$edit_result = $catalog->editProduct($id, $_POST);	
+			$edit_result = $catalog->editProduct($id, $_POST, $_FILES, $product_data['image']);	
 		}
 
+		$product_data = $catalog->getProduct($id);
+
+		require_once 'view/admin/productEdit.php';
 		return true;
 	}
 }

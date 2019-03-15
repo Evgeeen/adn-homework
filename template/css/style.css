@@ -58,8 +58,8 @@ body {
   font-family: "RobotoRegular";
   margin: 0;
   }
-.form-block {
-  
+.form-block img {
+  max-width: 200px;
 }
 .product-block {
   border: 1px solid #eee;  

@@ -15,6 +15,7 @@ return array(
 	'admin/user/([0-9]+)' => 'admin/user/$1',
 	'admin/product/([0-9]+)' => 'admin/product/$1',
 	'admin/productAdd' => 'admin/productAdd',
+	'admin/productEdit/([0-9]+)' => 'admin/productEdit/$1',
 	'admin/catalog$' => 'admin/catalog',
 	'admin$' => 'admin/index',
 

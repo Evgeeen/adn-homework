@@ -19,8 +19,8 @@
 							<img src="<?= $image ?>" alt="<?= $product['name']?>">	
 						<?php endforeach ?>
 						<p><?= $product['size'] ?></p>
-						<a href="javascript:;">Редактировать</a>
-						<a href="javascript:;">Удалить</a>
+						<a href="/admin/productEdit/<?= $product['id'] ?>">Редактировать</a>
+						<a href="/admin/productDel/<?= $product['id'] ?>">Удалить</a>
 
 					</div>
 				<?php endforeach ?>

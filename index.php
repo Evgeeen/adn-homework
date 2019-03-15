@@ -1,4 +1,10 @@
 <?php 
+	function printt($variable)
+	{
+		echo '<pre>';
+		var_dump($variable);
+		echo '</pre>';
+	}
 	date_default_timezone_set('Asia/Krasnoyarsk');
 	define('ROOT', dirname(__FILE__));
 
