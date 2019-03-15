@@ -4,7 +4,7 @@
 ?>
 <body>
 <?php 
-	include ROOT . '/template/navigation.php';
+	//include ROOT . '/template/navigation.php';
 ?>
 <body>
 	<div class="container">

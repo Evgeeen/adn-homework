@@ -10,7 +10,7 @@ class User extends Model
 	public function loginUser($username, $password)
 	{
 		$errors = array();
-		
+
 		if(empty($username) OR empty($password)) {
 			$errors[] = 'Для авторизации введите логин и пароль.';
 			return $errors;
@@ -35,9 +35,12 @@ class User extends Model
 		if($result) {
 			if($result['password'] == md5($password)) {
 				return true;
+			} 
+			else {
+				$errors[] = 'Неверный логин или пароль';
+				return $errors;		
 			}
 		}
-		return $result;
 	}
 
 	/**

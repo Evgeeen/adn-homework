@@ -23,8 +23,7 @@ class UserController extends Controller
 			if(is_array($result)){
 				$errors = $result;
 			}
-
-			if($result == true) {
+			else if($result == true) {
 				Session::init();
 				Session::set('login', $login);
 
@@ -58,7 +57,13 @@ class UserController extends Controller
 
 	public function actionLogout()
 	{
-		
+		Session::init();
+
+		if(Session::get('login') !== NULL) {
+			Session::destroy();
+			header('Location: /');
+		}
+		return true;
 	}
 	
 }

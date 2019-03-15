@@ -4,7 +4,7 @@
 ?>
 <body>
 <?php 
-    include dirname(__FILE__) . '/template/navigation.php';
+    //include dirname(__FILE__) . '/template/navigation.php';
 ?>
 <div class="container">
 	<h1>404</h1>
