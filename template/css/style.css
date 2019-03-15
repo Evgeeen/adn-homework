@@ -68,5 +68,9 @@ body {
 }
 .product-block img {
   max-width: 200px;
-
+}
+.form-auth {
+  width: 300px;
+  display: block;
+  margin: auto;
 }

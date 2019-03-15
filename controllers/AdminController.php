@@ -5,6 +5,12 @@ use models\{User, Cart, Catalog};
 
 class AdminController extends AdminBaseController 
 {
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
+
 	public function actionIndex()
 	{
 		
@@ -47,13 +53,6 @@ class AdminController extends AdminBaseController
 		require_once 'view/admin/userEdit.php';
 		return true;
 	}	
-
-
-	/*public function actionUserAdd()
-	{
-
-		return true;
-	}*/
 
 
 	public function actionCatalog()

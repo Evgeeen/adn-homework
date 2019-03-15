@@ -7,6 +7,21 @@ use core\classes\Model;
 
 class User extends Model 
 {
+	public function loginUser($username, $password)
+	{
+
+		var_dump($username);
+		$query_stmt = $this->db->prepare("
+			SELECT username, email, password 
+			FROM users 
+			WHERE username = :username;");
+		$query_stmt->execute(array($username, ':username'));
+		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
+		echo "ok";
+		var_dump($result);
+		return $result;
+	}
+
 	public function getUsersList()
 	{
 		$query_stmt = $this->db->query('

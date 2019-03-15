@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <?php
-    include ROOT . '/templates/head.php';
+    include ROOT . '/template/header.php';
 ?>
 <body>
 <?php 
-	include ROOT . '/templates/navigation.php';
+	include ROOT . '/template/navigation.php';
 ?>
 <body>
 	
