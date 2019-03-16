@@ -1,4 +1,5 @@
 <?php 
+
 	function printt($variable)
 	{
 		echo '<pre>';
@@ -10,11 +11,6 @@
 
 	require_once 'core/components/Loader.php';
 
-
 	$router = new Router();
 	$router->run();
-
-	
-
-
 ?>

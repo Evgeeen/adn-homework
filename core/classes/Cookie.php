@@ -19,7 +19,7 @@ class Cookie
 	}
 
 
-	public static function delete()
+	public static function delete($key)
 	{
 		if(isset($_COOKIE[$key])) {
 			unset($_COOKIE[$key]);
