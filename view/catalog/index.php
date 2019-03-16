@@ -26,6 +26,7 @@
 									<b><?= $product['name'] ?></b>
 									<p>Цена: <?= $product['price'] ?></p>	
 									<p data="<?= $product['size'] ?>">Размер: <?= $product['width'] ?>X<?= $product['height'] ?></p>
+									<input class="quantity" type="number" name="quantity" value="1">
 									<!--<select size="5" multiple name="size">
 										<option value="<?= $product['size'] ?>"></option>
 									</select>-->
@@ -34,8 +35,9 @@
 										<p>Подробная инфомрация</p>
 										<small><?= $product['descr'] ?></small>
 									</div>
+									<a class="add-cart" data-id="<?= $product['id'] ?>" href="javascript:;">Добавить в корзину</a>
 								</div>
-								<a href="/cart/add/<?= $product['id'] ?>">Добавить в корзину</a>
+								
 							</div>
 						</div>
 					</div>
@@ -44,4 +46,24 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	 $('.add-cart').click(function(e){
+        var id = $(this).attr('data-id')
+        var quantity = $(this).parent().find('.quantity').val();
+        console.log(id);
+        console.log(quantity);
+
+        $.ajax({
+            type: "POST",
+            url: '/cart/add',
+            data: {
+            	id: id,
+            	quantity: quantity 
+            },
+            success: function(data) {
+                console.log(data);
+            }   
+        })
+    })
+</script>
 </html>
