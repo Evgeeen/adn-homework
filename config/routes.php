@@ -1,6 +1,11 @@
 <?php 
 
 return array(
+	'cart/add' => 'cart/add',
+	'cart/quantity' => 'cart/quantity',
+	'cart/clear' => 'cart/clear',
+	'cart/remove' => 'cart/removeItem',
+	
 	'cart$' => 'cart/index',
 	'cart/order' => 'cart/order',
 	'catalog$' => 'catalog/index',
