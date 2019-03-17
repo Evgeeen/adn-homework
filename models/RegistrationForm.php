@@ -27,6 +27,7 @@ class RegistrationForm extends Form
 		}
 		if(strlen($this->password) < 6) {
 			$this->addError('password', 'Пароль слишком короткий');
+			return false;
 		}
 
 		$this->password = md5($this->password);	
