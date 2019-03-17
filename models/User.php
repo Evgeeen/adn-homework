@@ -7,56 +7,31 @@ use core\classes\Model;
 
 class User extends Model 
 {
-	public function loginUser($username, $password)
+	public function getUserData($username)
 	{
-		$errors = array();
-
-		if(empty($username) OR empty($password)) {
-			$errors[] = 'Для авторизации введите логин и пароль.';
-			return $errors;
-		}
-
 		$query_stmt = $this->db->prepare("
-			SELECT username, email, password, status
+			SELECT username, email, password, status, type
 			FROM users 
 			WHERE username = :username;");
 		$query_stmt->execute(array('username' => $username));
 		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
-
-		if($result['status'] = 0) {
-			$errors[] = 'Аккаунт не активирован, обратитесь к администратору admin@admin.com';
-		}
-		if($result === false) {
-			$errors[] = 'Пользователя не существует. Пройдите <a href="/reg">регистрацию</a>';	
-		}
-
-		if($result) {
-			if($result['password'] == md5($password)) {
-				return true;
-			} 
-			else {
-				$errors[] = 'Неверный логин или пароль';
-				return $errors;		
-			}
-		}
+	
+		return $result;
 	}
 
-	/**
-	 * [getUserType description]
-	 * @param  [string] $username [description]
-	 * @return [number]           [description]
-	 */
-	public function getUserType($username)
+
+	public function getUserAttributes($username)
 	{
 		$query_stmt = $this->db->prepare("
-			SELECT type 
-			FROM users 
-			WHERE username = :username;");
+			SELECT firstname, lastname, patronymic, phone, city, adress
+			FROM user_attributes 
+			WHERE id = (SELECT id FROM users WHERE username = :username)");
 		$query_stmt->execute(array('username' => $username));
 		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
-
-		return $result['type'];
+		
+		return $result;
 	}
+
 
 	/**
 	 * [getUsersList description]
@@ -104,8 +79,12 @@ class User extends Model
 		$query_stmt = $this->db->prepare("
 			INSERT INTO users (username, email, password, status, type)
 			VALUES (:username, :email, :password, :status, :type)");
-		$result = $query_stmt->execute($data);
+		$query_stmt->execute($data);
+		$id = $this->db->lastInsertId();
 
+		$query_stmt = $this->db->prepare("INSERT INTO user_attributes (id) VALUES (:id)");
+		$result = $query_stmt->execute(array('id' => $id));
+		
 		return $result;
 	}
 
@@ -136,6 +115,33 @@ class User extends Model
 		$result = $query_stmt->execute($params);
 
 		return $result;
+	}
+
+
+	public function setStatus($token, $user_data)
+	{
+		$current_token = md5($user_data['email']) . md5($user_data['username']);
+
+		if($token == $current_token) {
+			$query_stmt = $this->db->prepare("
+				UPDATE users SET status = '1'
+				WHERE username = :username");
+			$query_stmt->execute(array('username' => $user_data['username']));
+			return true;
+		}
+		return false;
+	}
+
+
+	public function setAttributes($login, array $parameters)
+	{
+		$parameters['username'] = $login;
+		$query_stmt = $this->db->prepare("
+			UPDATE user_attributes 
+			SET firstname = :firstname, lastname = :lastname, patronymic = :patronymic, 
+				phone = :phone, city = :city, adress = :adress
+			WHERE (SELECT id FROM users WHERE username = :username)");
+		$query_stmt->execute($parameters);
 	}
 }
 
