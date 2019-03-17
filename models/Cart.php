@@ -93,8 +93,6 @@ class Cart extends Model
 			} else {
 				$this->product_IDs[$id] = $quantity;
 			}
-			var_dump($this->product_IDs);
-			die();
 			Cookie::set('cart', $this->setStringID($this->product_IDs));
 			return true;
 			

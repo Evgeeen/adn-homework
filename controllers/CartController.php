@@ -13,9 +13,7 @@ class CartController extends Controller
 
 	public function actionIndex()
 	{
-		if($this->loggedUser !== false) {
-			$cart_list = $this->model->getCart();
-		}
+		$cart_list = $this->model->getCart();
 
 		require_once 'view/cart/index.php';
 		return true;
@@ -25,9 +23,7 @@ class CartController extends Controller
 	public function actionAdd()
 	{
 		if(isset($_POST) AND $_SERVER['REQUEST_METHOD'] == 'POST') {
-			if($this->loggedUser !== false) {
-				$this->model->addToCart($_POST['id'], $_POST['quantity']);
-			}	
+			$this->model->addToCart($_POST['id'], $_POST['quantity']);				
 		}
 		return true;
 	}
