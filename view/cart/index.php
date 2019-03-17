@@ -46,6 +46,15 @@
 						</div>
 					</div>
 				<?php endforeach ?>
+				<?php 
+					if($this->loggedUser) {
+						?>
+							<div class="order-link">
+								<a href="/order">Оформить заказ</a>
+							</div>
+						<?php
+					}
+				?>
 			</div>
 		</div>
 	</div>
