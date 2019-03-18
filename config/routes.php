@@ -6,7 +6,6 @@ return array(
 	'cart/clear' => 'cart/clear',
 	'cart/remove' => 'cart/removeItem',
 	'cart$' => 'cart/index',
-	'order$' => 'order/index',
 
 	'catalog$' => 'catalog/index',
 
