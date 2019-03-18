@@ -55,6 +55,56 @@
 						<?php
 					}
 				?>
+				<?php if (!$this->loggedUser): ?>
+				<div class="col-md-12">
+					<p>Для оформления заказа вам необходимо зарегетрироваться</p>
+				</div>
+			<?php endif; ?>
+			
+			<?php if ($this->loggedUser): ?>
+				<div class="col-md-12">
+					<form method="POST" action="/cart">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="firstname">Login</label>
+								<input class="form-control" type="input" name="username" value="<?= $user_data['username'] ?>">
+							</div>
+							<div>
+								<label for="lasttname">Email</label>
+								<input class="form-control" type="email" name="email" value="<?= $user_data['email'] ?>">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="firstname">Как к вам обращаться</label>
+								<input class="form-control" type="input" name="firstname" value="<?= $user_attributes['firstname'] ?>">
+							</div>
+							<div>
+								<label for="lasttname">Фамилия</label>
+								<input class="form-control" type="input" name="lastname" value="<?= $user_attributes['lastname'] ?>">
+							</div>
+							<div>
+								<label for="patronymic">Отчество</label>
+								<input class="form-control" type="input" name="patronymic" value="<?= $user_attributes['patronymic'] ?>">
+							</div>
+							<div>
+								<label for="phone">Контактный телефон</label>
+								<input class="form-control" type="input" name="phone" value="<?= $user_attributes['phone'] ?>">
+							</div>
+							<div>
+								<label for="adress">Город</label>
+								<input class="form-control" type="input" name="city" value="<?= $user_attributes['city'] ?>">
+							</div>
+							<div>
+								<label for="adress">Адрес</label>
+								<input class="form-control" type="input" name="adress" value="<?= $user_attributes['adress'] ?>">
+							</div>
+
+							<input type="submit" name="submit" value="Заказать">
+						</div>
+					</form>
+				</div>
+			<?php endif; ?>
 			</div>
 		</div>
 	</div>
