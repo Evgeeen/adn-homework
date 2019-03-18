@@ -19,6 +19,12 @@ class Controller
 	public $loggedUser = false;
 
 	/**
+	 * usernmae
+	 * @var string
+	 */
+	public $username;
+
+	/**
 	 * [__construct description]
 	 */
 	public function __construct()
@@ -27,6 +33,7 @@ class Controller
 
 		if(Session::get('login') !== NULL){
 			$this->loggedUser = true;
+			$this->username = Session::get('login');
 		}
 	}
 
