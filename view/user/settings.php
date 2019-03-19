@@ -49,6 +49,25 @@
 						<input type="submit" value="Сохранить">
 					</form>
 				</div>
+				<div class="col-md-6">
+					<table>
+						<tr>
+							<td>Номер</td>
+							<td>Количество</td>
+							<td>Дата</td>
+						</tr>
+						<?php foreach ($orders_list as $order): ?>
+							<a href="">
+								
+								<tr>
+									<td><?= $order['id'] ?></td>
+									<td><?= count(unserialize($order['products'])) ?></td>
+									<td><?= $order['date'] ?></td>
+								</tr>
+							</a>
+						<?php endforeach ?>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
