@@ -7,6 +7,8 @@ return array(
 	'cart/remove' => 'cart/removeItem',
 	'cart$' => 'cart/index',
 
+	'order/send' => 'order/add',	
+
 	'catalog$' => 'catalog/index',
 
 	'auth$' => 'user/login',

@@ -3,8 +3,8 @@
 return array(
 	'host' => 'localhost',
 	'dbname' => 'shop',
-	'dbuser' => 'root',
-	'dbpassword' => ''
+	'dbuser' => 'carlo',
+	'dbpassword' => 'BuraTino2018'
 );
 
 ?>

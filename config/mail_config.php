@@ -1,8 +1,8 @@
 <?php  
 
 return array(
-	'host' => 'smtp.mail.ru',
-	'username' => 'evgeniyy.lapin@mail.ru',
+	'host' => 'smtp.yandex.ru',
+	'username' => 'Evgeniyyy.lapin@yandex.ru',
 	'password' => '78789878qwerty',
 	'secure' => 'ssl',
 	'port' => 465

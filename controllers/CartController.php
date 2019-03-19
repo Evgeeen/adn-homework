@@ -1,7 +1,7 @@
 <?php 
 
 use core\classes\{Controller, Cookie};
-use models\{Cart, User, UserAttributesForm, Order};
+use models\{Cart, User, UserAttributesForm};
 
 class CartController extends Controller 
 {
@@ -15,18 +15,7 @@ class CartController extends Controller
 	{
 		if(Cookie::get('cart')) {
 			$user = new User();
-
-			if(isset($_POST) AND $_SERVER['REQUEST_METHOD'] == 'POST') {
-				$user_attributes_form = new UserAttributesForm($_POST);
-
-				if($data = $user_attributes_form->validate()) {
-					$order = new Order();
-					$user->setAttributes($this->username, $data);
-					$order->addOrder($this->username, Cookie::get('cart'));
-					Cookie::delete('cart');
-				}
-			}
-
+			
 			$user_data = $user->getUserData($this->username);
 			$user_attributes = $user->getUserAttributes($this->username);
 			$cart_list = $this->model->getCart();

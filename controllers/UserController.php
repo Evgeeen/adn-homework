@@ -61,13 +61,16 @@ class UserController extends Controller
 			if($data = $user_reg_form->validate()) {
 				$test = $this->model->addUser($data);	
 				if($test == true) {
-					/*******/
-					$file = ROOT . '/test-mail.php';
-					$current = file_get_contents($file);
-					$link = md5($data['email']) . md5($data['username']);
-					$current .= " /user/activate/" . $link . '&' . $data['username'] ."\n";
-					file_put_contents($file, $current);
-					/*******/
+					$token = md5($data['email']) . md5($data['username']);
+					$link .= $_SERVER['HTTP_HOST'] . "/user/activate/" . $token . '&' . $data['username'] ."\n";
+
+					$to      = 'evgeniyy.lapin@gmail.com';
+					$subject = 'Новый заказ shop';
+					$message = $link;
+					$headers = 'From: shop@example.com' . "\r\n" .
+					    'Reply-To: shop@example.com' . "\r\n" .
+					    'X-Mailer: PHP/' . phpversion();
+					
 					header('Location: /registration/success/');
 				}
 			}

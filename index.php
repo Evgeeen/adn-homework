@@ -1,5 +1,4 @@
 <?php 
-
 	function printt($variable)
 	{
 		echo '<pre>';
