@@ -7,6 +7,11 @@ use core\classes\Model;
 
 class User extends Model 
 {
+	/**
+	 * getting user data by username
+	 * @param  string $username 
+	 * @return array           user data
+	 */
 	public function getUserData($username)
 	{
 		$query_stmt = $this->db->prepare("
@@ -19,7 +24,11 @@ class User extends Model
 		return $result;
 	}
 
-
+	/**
+	 * getting user attributes by username
+	 * @param  string $username 
+	 * @return array           user attributes
+	 */
 	public function getUserAttributes($username)
 	{
 		$query_stmt = $this->db->prepare("
@@ -32,10 +41,9 @@ class User extends Model
 		return $result;
 	}
 
-
 	/**
-	 * [getUsersList description]
-	 * @return [type] [description]
+	 * getting a list of user with full information about them
+	 * @return array  full user list data
 	 */
 	public function getUsersList()
 	{
@@ -50,9 +58,9 @@ class User extends Model
 	}
 
 	/**
-	 * [getUser description]
-	 * @param  [type] $userID [description]
-	 * @return [type]         [description]
+	 * getting data of user by user ID
+	 * @param  number $userID unique user ID
+	 * @return array         user data
 	 */
 	public function getUser($userID)
 	{
@@ -68,8 +76,8 @@ class User extends Model
 	}
 
 	/**
-	 * [addUser description]
-	 * @param [array] $data [description]
+	 * adding new user
+	 * @param array $data user data
 	 */
 	public function addUser($data)
 	{
@@ -89,10 +97,10 @@ class User extends Model
 	}
 
 	/**
-	 * [editUser description]
-	 * @param  [type] $id     [description]
-	 * @param  [type] $params [description]
-	 * @return [type]         [description]
+	 * editing user 
+	 * @param  number $id     unique user ID
+	 * @param  array $params  new user data
+	 * @return boolean
 	 */
 	public function editUser($id, $params)
 	{
@@ -117,7 +125,11 @@ class User extends Model
 		return $result;
 	}
 
-
+	/**
+	 * seting user status adfter registration
+	 * @param string $token     unique user token
+	 * @param array $user_data array with username and email
+	 */
 	public function setStatus($token, $user_data)
 	{
 		$current_token = md5($user_data['email']) . md5($user_data['username']);
@@ -132,7 +144,11 @@ class User extends Model
 		return false;
 	}
 
-
+	/**
+	 * setting new user atributes 
+	 * @param string $login      username
+	 * @param array  $parameters user attributes data
+	 */
 	public function setAttributes($login, array $parameters)
 	{
 		$parameters['username'] = $login;
@@ -142,6 +158,44 @@ class User extends Model
 				phone = :phone, city = :city, adress = :adress
 			WHERE (SELECT id FROM users WHERE username = :username)");
 		$query_stmt->execute($parameters);
+	}
+
+	/**
+	 * check on the existence of the user in the database
+	 * @param  string $username 
+	 */
+	public function checkUsername($username)
+	{
+		$query_stmt = $this->db->prepare("
+			SELECT id
+			FROM users 
+			WHERE username = :username;");
+		$query_stmt->execute(array('username' => $username));
+		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
+		
+		if(!$result) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * check on the existence of the email in the database
+	 * @param  string $email 
+	 */
+	public function checkEmail($email)
+	{
+		$query_stmt = $this->db->prepare("
+			SELECT id
+			FROM users 
+			WHERE email = :email;");
+		$query_stmt->execute(array('email' => $email));
+		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
+		
+		if(!$result) {
+			return true;
+		}
+		return false;
 	}
 }
 
