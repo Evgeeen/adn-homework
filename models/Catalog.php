@@ -35,12 +35,12 @@ class Catalog extends Model
 		$query_stmt = $this->db->prepare("
 			SELECT products.*, product_sizes.width, product_sizes.height
 			FROM products 
-			INNER JOIN product_sizes ON products.id = product_sizes.id
-			WHERE  products.id = :id;");
+			INNER JOIN product_sizes ON products.size = product_sizes.id
+			WHERE  products.id = :id");
 		$query_stmt->execute(array('id' => $id));
 		$result = $query_stmt->fetch(PDO::FETCH_ASSOC);
 		$result['image'] = unserialize($result['image']);
-
+		
 		return $result;
 	}
 
@@ -84,17 +84,18 @@ class Catalog extends Model
 			$file_array = File::upload($files);
 			$file_array = array_merge($file_array, $current_image);
 			$params['image'] = serialize($file_array);
+		} 
+		else {
+			$params['image'] = serialize($current_image);
 		}
 
 		$query_stmt = $this->db->prepare("
 			UPDATE products
 			SET name = :name, descr = :descr, image = :image, size = :size
 			WHERE id = :id");
-		var_dump($params);
+		
 		$result = $query_stmt->execute($params);
-
 		return $result;
-
 	}
 }
 

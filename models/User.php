@@ -113,12 +113,12 @@ class User extends Model
 				u.email = :email, 
 				u.status = :status,
 				u.password = :password, 
+				u.type = :type,			
 				ua.firstname = :firstname,
 				ua.lastname = :lastname,
 				ua.patronymic = :patronymic,
 				ua.phone = :phone,
-				ua.adress = :adress,
-				ua.type = :type			
+				ua.adress = :adress
 			WHERE u.id = :id AND ua.id = :id");
 		$result = $query_stmt->execute($params);
 

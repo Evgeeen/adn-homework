@@ -92,6 +92,7 @@ class AdminController extends AdminBaseController
 		$catalog = new Catalog();
 		
 		if(isset($_POST['submit'])) {
+			$product_data = $catalog->getProduct($id);
 			$edit_result = $catalog->editProduct($id, $_POST, $_FILES, $product_data['image']);	
 		}
 
