@@ -11,7 +11,9 @@ class OrderController extends Controller
 		$this->model = new Order();
 	}
 
-
+	/**
+	 * adding order
+	 */
 	public function actionAdd()
 	{
 		if(isset($_POST) AND $_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -42,7 +44,7 @@ class OrderController extends Controller
 			if($data = $user_attributes_form->validate()) {
 				$user = new User();
 				$user->setAttributes($this->username, $data);
-				//$this->model->addOrder($this->username, Cookie::get('cart'));
+				$this->model->addOrder($this->username, Cookie::get('cart'));
 				
 			}
 		}

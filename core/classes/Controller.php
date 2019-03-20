@@ -25,6 +25,12 @@ class Controller
 	public $username;
 
 	/**
+	 * [$isadmin description]
+	 * @var boolean
+	 */
+	public $isAdmin = false;
+
+	/**
 	 * [__construct description]
 	 */
 	public function __construct()

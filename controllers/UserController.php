@@ -1,7 +1,7 @@
 <?php  
 
 use core\classes\{Controller, Session};
-use models\{User, RegistrationForm, LoginForm};
+use models\{User, Order, RegistrationForm, LoginForm};
 
 class UserController extends Controller 
 {
@@ -70,6 +70,7 @@ class UserController extends Controller
 					$headers = 'From: shop@example.com' . "\r\n" .
 					    'Reply-To: shop@example.com' . "\r\n" .
 					    'X-Mailer: PHP/' . phpversion();
+					mail($to, $subject, $message, $headers);
 					
 					header('Location: /registration/success/');
 				}
@@ -131,7 +132,13 @@ class UserController extends Controller
 	 */
 	public function actionSettings()
 	{
+		if(!$this->loggedUser) {
+			header('Location: /');
+		}
+
 		$login = Session::get('login');
+		$order = new Order();
+		$orders_list = $order->getOrders($login);
 
 		if(isset($_POST) AND $_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->model->setAttributes($login, $_POST);

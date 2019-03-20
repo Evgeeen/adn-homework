@@ -27,12 +27,14 @@
 						<input name="patronymic" class="form-control" type="text" value="<?= $user_data['patronymic']?>">
 						<label for="phone">phone</label>
 						<input name="phone" class="form-control" type="text" value="<?= $user_data['phone']?>">
+						<label for="adress">city</label>
+						<input name="city" class="form-control" type="text" value="<?= $user_data['city']?>">
 						<label for="adress">adress</label>
 						<input name="adress" class="form-control" type="text" value="<?= $user_data['adress']?>">
 						<label for="type">type</label>
 						<input name="type" class="form-control" type="text" value="<?= $user_data['type']?>">
 
-						<label for="password">type</label>
+						<label for="password">password</label>
 						<input name="password" class="form-control" type="password" value="">
 
 						<input name="submit" class="form-control" type="submit" value="Сохранить">

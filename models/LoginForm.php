@@ -28,10 +28,7 @@ class LoginForm extends Form
 		$user_data = $user->getUserData($this->login);
 		
 		if($user_data) {
-			/*if($user_data['username'] !== $this->login) {
-				$this->addError('login', 'Неверный логин или пароль');
-				return false;
-			}*/
+			
 			if($user_data['password'] !== md5($this->password)) {
 				$this->addError('password', 'Неверный логин или пароль');
 				return false;

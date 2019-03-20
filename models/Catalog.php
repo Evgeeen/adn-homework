@@ -8,12 +8,10 @@ use core\classes\{Model, File};
 
 class Catalog extends Model
 {
-	public function deleteProductImage(){
-
-	}
-
-
-	public function getProducts($page = 1)
+	/**
+	 * getting products list
+	 */
+	public function getProducts()
 	{
 		$query_stmt = $this->db->prepare("
 			SELECT products.*,  pr_size.width, pr_size.height
@@ -28,7 +26,10 @@ class Catalog extends Model
 		return $result;
 	}	
 
-
+	/**
+	 * getting product by id
+	 * @param  number $id product ID
+	 */
 	public function getProduct($id)
 	{
 		$query_stmt = $this->db->prepare("
@@ -43,12 +44,16 @@ class Catalog extends Model
 		return $result;
 	}
 
-
+	/**
+	 * adding new product with image
+	 * @param array  $params product data array
+	 * @param array $file   image data array
+	 */
 	public function addProduct($params, $file = 0)
 	{
 		unset($params['submit']);
 		
-		if($file['picture']['size'] !== 0){
+		if($file['picture']['name'] !== NULL){
 			$files = File::upload($file);
 			$params['image'] = serialize($files);
 		} else {
@@ -63,7 +68,13 @@ class Catalog extends Model
 		return $result;
 	}
 
-
+	/**
+	 * editing product
+	 * @param  number $id            product ID
+	 * @param  array  $params        product params
+	 * @param  array  $files         new image for product catalog
+	 * @param  array  $current_image currently image from catalog
+	 */
 	public function editProduct($id, $params, $files, $current_image)
 	{
 		unset($params['submit']);
